@@ -3,7 +3,7 @@
 \title{Get travel time from current position}
 \usage{
 travelTimeFromPos(WGS, destinations = c(9001), Time = "12:00",
-  Date = strftime(today(), "\%d.\%m.\%Y"))
+  Date = strftime(today(), "\%d.\%m.\%Y"), verbose = FALSE)
 }
 \arguments{
   \item{coords}{A vector of WGS coordinates on [northing,

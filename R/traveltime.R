@@ -12,7 +12,8 @@ travelTimeFromPos <- function(
 	WGS,
 	destinations = c(9001),
 	Time = "12:00",
-	Date = strftime(today(), "%d.%m.%Y")
+	Date = strftime(today(), "%d.%m.%Y"),
+	verbose = FALSE
 ) {
 	# Get point of origin in an API friendly format
 	SID <- paste0("@Y=",format(WGS*10^6, digits=8)[1],"@X=",format(WGS*10^6, digits=8)[2])
@@ -32,6 +33,10 @@ travelTimeFromPos <- function(
 				Time = Time,
 				Date = Date
 			))
+		
+		if (verbose) {
+			cat(url,"\n")
+		}
 		
 		x <- GET(url)
 		xdata <- xmlToList(xmlParse(x), simplify = TRUE)
