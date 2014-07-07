@@ -39,7 +39,14 @@ travelTimeFromPos <- function(
 		}
 		
 		x <- GET(url)
-		xdata <- xmlToList(xmlParse(x), simplify = TRUE)
+		
+		# Header is returned with weird formatting
+		# NOTE: THIS WILL PROBABLY CHANGE AS SL LAUNCH THEIR NEW API IN
+		# (PROBABLY) AUTUMN 2014!
+		vec <- strtoi(content(x, "raw"), base=16)
+		response <- rawToChar(as.raw(vec))
+		
+		xdata <- xmlToList(xmlParse(response), simplify = TRUE)
 		
 		# Error handling: If the first element of xdata is not a list, an error
 		# has been returned instead of travel data. However, we don't want the
@@ -56,7 +63,7 @@ travelTimeFromPos <- function(
 			next()
 		}
 		
-		sumtime[[dest]] <- 0
+		sumtime[dest] <- 0
 		for (i in 3:7) {
 			dur <- xdata[[i]]$Summary$Duration
 			
